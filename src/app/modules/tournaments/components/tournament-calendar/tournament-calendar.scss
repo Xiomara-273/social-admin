@@ -1,0 +1,34 @@
+$neon-blue: #00d2ff;
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.match-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid $neon-blue;
+  padding: 15px;
+  border-radius: 8px;
+  
+  .match-info { font-size: 0.75rem; opacity: 0.6; margin-bottom: 10px; }
+  
+  .match-versus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+    .vs { color: $neon-blue; font-style: italic; font-size: 0.8rem; }
+  }
+  
+  .match-location {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    opacity: 0.8;
+  }
+}
