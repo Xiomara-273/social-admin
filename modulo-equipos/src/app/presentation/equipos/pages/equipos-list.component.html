@@ -1,0 +1,49 @@
+<div class="p-6 animate-fade-in">
+  <h1 class="text-3xl font-bold mb-6 text-center text-indigo-600">
+    Gestión de Equipos
+  </h1>
+
+  <!-- Filtros -->
+  <div class="flex gap-4 mb-6 justify-center">
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select>
+        <mat-option value="activo">Activo</mat-option>
+        <mat-option value="inactivo">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">
+      Filtrar
+    </button>
+  </div>
+
+  <!-- Lista -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <mat-card *ngFor="let equipo of equipos"
+      class="hover:scale-105 transition-transform duration-300">
+      <mat-card-header>
+        <mat-card-title>{{ equipo.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ equipo.ciudad }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ equipo.descripcion }}</p>
+        <p class="mt-2 text-sm">
+          Capitán: <b>{{ equipo.capitan }}</b>
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-button color="primary">Ver</button>
+        <button mat-button color="accent">Editar</button>
+        <button mat-button color="warn">Eliminar</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

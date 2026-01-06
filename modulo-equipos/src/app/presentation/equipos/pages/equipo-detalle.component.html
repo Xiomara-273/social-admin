@@ -1,0 +1,21 @@
+<div class="max-w-lg mx-auto p-6 animate-fade-in">
+  <mat-card>
+
+    <img mat-card-image [src]="equipo.escudo" alt="Escudo">
+
+    <mat-card-content>
+      <h2 class="text-2xl font-bold text-center mb-4">
+        {{ equipo.nombre }}
+      </h2>
+
+      <p>{{ equipo.descripcion }}</p>
+
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><b>Ciudad:</b> {{ equipo.ciudad }}</li>
+        <li><b>Capitán:</b> {{ equipo.capitan }}</li>
+        <li><b>Estado:</b> {{ equipo.estado }}</li>
+      </ul>
+    </mat-card-content>
+
+  </mat-card>
+</div>
