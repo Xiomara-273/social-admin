@@ -1,0 +1,91 @@
+<div class="config-wrapper fade-in">
+  <header class="config-header">
+    <div class="title-group">
+      <h1>⚙️ CONFIGURACIÓN DEL SISTEMA</h1>
+      <p>Ajustes de marca, catálogos y documentos legales</p>
+    </div>
+    
+    <div class="tabs-neon">
+      <button (click)="cambiarTab('general')" [class.active]="tabActiva() === 'general'">⚙️ General</button>
+      <button (click)="cambiarTab('catalogos')" [class.active]="tabActiva() === 'catalogos'">📚 Catálogos</button>
+      <button (click)="cambiarTab('legales')" [class.active]="tabActiva() === 'legales'">⚖️ Legales</button>
+    </div>
+  </header>
+
+  <div class="config-content glass-card">
+    @if (tabActiva() === 'general') {
+      <div class="config-section slide-in">
+        <h3 class="section-title">Ajustes de Marca</h3>
+        
+        <div class="setting-item">
+          <div class="setting-text">
+            <label>Nombre de la Plataforma</label>
+            <p>Define el nombre público de tu aplicación de torneos.</p>
+          </div>
+          <div class="setting-input">
+            <input type="text" [(ngModel)]="nombreApp" class="neon-input">
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-text">
+            <label>Color Principal (Neón)</label>
+            <p>Personaliza el tono de los botones y brillos del sistema.</p>
+          </div>
+          <div class="setting-input">
+            <div class="color-picker-wrapper">
+              <input type="color" [(ngModel)]="colorPrimario" class="color-input">
+              <span class="color-hex">{{ colorPrimario() }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-actions">
+          <button class="btn-save-neon" (click)="guardarConfig()">Guardar Cambios</button>
+        </div>
+      </div>
+    }
+
+    @if (tabActiva() === 'catalogos') {
+      <div class="config-section slide-in">
+        <h3>Gestión de Catálogos</h3>
+        <div class="catalog-grid">
+          <div class="catalog-box">
+            <h4>⚽ Posiciones de Jugadores</h4>
+            <ul class="neon-list">
+              @for (pos of posiciones(); track $index) {
+                <li>{{ pos }} <button class="btn-del">×</button></li>
+              }
+            </ul>
+            <button class="btn-add">+ Añadir Posición</button>
+          </div>
+
+          <div class="catalog-box">
+            <h4>📊 Niveles de Habilidad</h4>
+            <ul class="neon-list">
+              @for (niv of niveles(); track $index) {
+                <li>{{ niv }} <button class="btn-del">×</button></li>
+              }
+            </ul>
+            <button class="btn-add">+ Añadir Nivel</button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (tabActiva() === 'legales') {
+      <div class="config-section slide-in">
+        <h3>Documentos Legales</h3>
+        <div class="legal-group">
+          <label>Términos y Condiciones</label>
+          <textarea [(ngModel)]="terminos" rows="5" class="neon-textarea"></textarea>
+        </div>
+        <div class="legal-group">
+          <label>Aviso de Privacidad</label>
+          <textarea [(ngModel)]="privacidad" rows="5" class="neon-textarea"></textarea>
+        </div>
+        <button class="btn-save-neon" (click)="guardarConfig()">Publicar Documentos</button>
+      </div>
+    }
+  </div>
+</div>

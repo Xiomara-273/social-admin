@@ -1,0 +1,128 @@
+<div class="admin-container">
+  <div class="header-section">
+    <h1 class="title">Módulo Partidos</h1>
+    <button class="btn-new-match" (click)="abrirModal()">+ Programar Partido</button>
+  </div>
+
+  <div class="matches-grid">
+    @for (match of (partidos$ | async); track match.id) {
+      <div class="match-card slide-in">
+        
+        <div class="card-header">
+          <span class="status-badge" [class]="match.status">{{ match.status }}</span>
+          <button class="btn-icon-delete" (click)="eliminar(match.id)">🗑</button>
+        </div>
+
+        <div class="scoreboard-container">
+          <div class="team-side local">
+            <div class="team-logo">⚽</div>
+            <h3 class="team-name">{{ match.home }}</h3>
+          </div>
+
+          <div class="score-center">
+            <div class="score-box">
+              <span class="score-number">{{ match.scoreHome }}</span>
+              <span class="score-divider">:</span>
+              <span class="score-number">{{ match.scoreAway }}</span>
+            </div>
+          </div>
+
+          <div class="team-side away">
+            <div class="team-logo">⚽</div>
+            <h3 class="team-name">{{ match.away }}</h3>
+          </div>
+        </div>
+
+        <div class="match-info">
+          <div class="info-item">📍 {{ match.court }}</div>
+          <div class="info-item">🕒 {{ match.time }}</div>
+          <div class="info-item full">👤 Árbitro: {{ match.referee }}</div>
+        </div>
+
+        @if (match.status === 'en juego' || match.status === 'correccion') {
+          <div class="results-console fade-in">
+            <div class="team-selector-mini">
+              <button [class.active]="selectedTeam === 'home'" (click)="seleccionarEquipo('home')">
+                {{ match.home }}
+              </button>
+              <button [class.active]="selectedTeam === 'away'" (click)="seleccionarEquipo('away')">
+                {{ match.away }}
+              </button>
+            </div>
+
+            <div class="input-group">
+              <input #playerInput placeholder="NOMBRE DEL JUGADOR..." class="input-player-modern">
+            </div>
+
+            <div class="action-grid-mini">
+              <button class="btn-event goal" (click)="registrarEvento(match.id, 'GOL', playerInput)">⚽ GOL</button>
+              <button class="btn-event yellow" (click)="registrarEvento(match.id, 'T.AMARILLA', playerInput)">🟨 TA</button>
+              <button class="btn-event red" (click)="registrarEvento(match.id, 'T.ROJA', playerInput)">🟥 TR</button>
+              <button class="btn-event mvp" (click)="registrarEvento(match.id, 'MVP', playerInput)">👑 MVP</button>
+            </div>
+            
+            <div class="mini-events-log">
+              @for (event of match.events; track event.id) {
+                <div class="mini-event-tag fade-in">
+                  <span>{{ event.player }} - {{ event.type }}</span>
+                  <button (click)="borrarEvento(match.id, event.id)" class="btn-del-event">×</button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="card-footer">
+          @if (match.status === 'programado') {
+            <button class="btn-action start" (click)="cambiarEstado(match.id, 'en juego')">
+              Iniciar Partido
+            </button>
+          }
+          @if (match.status === 'en juego') {
+            <button class="btn-action end" (click)="cambiarEstado(match.id, 'finalizado')">
+              Finalizar Partido
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (mostrarFormulario) {
+    <div class="modal-overlay fade-in">
+      <div class="modal-content slide-in">
+        <h2 class="modal-title">Programar Partido</h2>
+        
+        <div class="form-group">
+          <label>Equipo Local</label>
+          <input [(ngModel)]="nuevoPartido.home" placeholder="Ej: F.C. Barcelona">
+        </div>
+
+        <div class="form-group">
+          <label>Equipo Visitante</label>
+          <input [(ngModel)]="nuevoPartido.away" placeholder="Ej: Real Madrid">
+        </div>
+
+        <div class="form-group">
+          <label>Cancha / Lugar</label>
+          <input [(ngModel)]="nuevoPartido.court" placeholder="Ej: Cancha Principal">
+        </div>
+
+        <div class="form-group">
+          <label>Hora</label>
+          <input [(ngModel)]="nuevoPartido.time" type="time">
+        </div>
+
+        <div class="form-group">
+          <label>Árbitro</label>
+          <input [(ngModel)]="nuevoPartido.referee" placeholder="Nombre del árbitro">
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+          <button class="btn-save" (click)="guardarPartido()">Guardar Partido</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,78 @@
+<div class="admin-container">
+  <div class="header">
+    <h2>Módulo Equipos </h2>
+    <button class="btn-primary" (click)="showForm = !showForm">
+      {{ showForm ? '✕ Cerrar' : '+ Crear Nuevo Equipo' }}
+    </button>
+  </div>
+
+  @if (showForm) {
+    <div class="form-card">
+      <h3>Registrar Nuevo Equipo</h3>
+      <div class="grid-form">
+        <div class="field-group">
+          <label>Nombre del Equipo</label>
+          <input type="text" [(ngModel)]="newTeam.name" name="teamName" placeholder="Ej: Guerreros F.C.">
+        </div>
+        <div class="field-group">
+          <label>URL del Escudo (Internet)</label>
+          <input type="text" [(ngModel)]="newTeam.logo" name="teamLogo" placeholder="Pega el link de la imagen aquí">
+        </div>
+        <div class="field-group">
+          <label>Dueño / Capitán</label>
+          <input type="text" [(ngModel)]="newTeam.owner" name="ownerName" placeholder="Nombre del responsable">
+        </div>
+        <div class="field-group">
+          <label>Ciudad</label>
+          <select [(ngModel)]="newTeam.location" name="teamLocation">
+            <option value="" disabled selected>Seleccionar...</option>
+            <option value="Quito, Pichincha">Quito</option>
+            <option value="Guayaquil, Guayas">Guayaquil</option>
+            <option value="Cuenca, Azuay">Cuenca</option>
+          </select>
+        </div>
+        <div class="field-group full-width">
+          <label>Descripción</label>
+          <textarea [(ngModel)]="newTeam.description" name="desc" placeholder="Breve historia..."></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-save" (click)="saveTeam()">Guardar Equipo</button>
+      </div>
+    </div>
+  }
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Escudo</th>
+          <th>Nombre</th>
+          <th>Ubicación</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (team of teams; track team.id) {
+          <tr>
+            <td>
+              @if (team.logo) {
+                <img [src]="team.logo" class="team-logo" alt="escudo">
+              } @else {
+                <div class="no-logo">⚽</div>
+              }
+            </td>
+            <td>{{ team.name }}</td>
+            <td>{{ team.location }}</td>
+            <td><span class="status-badge verified">Verificado</span></td>
+            <td class="action-buttons">
+              <button class="btn-edit" (click)="editTeam(team.id)"><i>✎</i></button>
+              <button class="btn-delete" (click)="deleteTeam(team.id)"><i>🗑</i></button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

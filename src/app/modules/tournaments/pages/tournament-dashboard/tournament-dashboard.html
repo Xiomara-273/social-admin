@@ -1,43 +1,63 @@
-<div class="dashboard-wrapper animate-fade-in">
-  <header class="dashboard-header">
+<div class="dashboard-wrapper fade-in"> <header class="dashboard-header">
     <div class="title-group">
-      <h1>📊 ESTADÍSTICAS DEL TORNEO</h1>
-      <p>Resultados y seguimiento en tiempo real</p>
+      <h1>📊 PANEL DE CONTROL ADMIN</h1>
+      <p>Gestión de usuarios, equipos y estadísticas generales</p>
     </div>
     
     <div class="tabs-neon">
+      <button [class.active]="activeTab() === 'resumen'" (click)="setTab('resumen')">🏠 Resumen</button>
       <button [class.active]="activeTab() === 'tabla'" (click)="setTab('tabla')">🏆 Tabla</button>
       <button [class.active]="activeTab() === 'calendario'" (click)="setTab('calendario')">📅 Calendario</button>
-      <button [class.active]="activeTab() === 'estadisticas'" (click)="setTab('estadisticas')">📈 Goleadores</button>
-      <button [class.active]="activeTab() === 'equipos'" (click)="setTab('equipos')">🛡️ Equipos</button>
+      <button [class.active]="activeTab() === 'estadisticas'" (click)="setTab('estadisticas')">📈 Rendimiento</button>
+      <button [class.active]="activeTab() === 'notificaciones'" (click)="setTab('notificaciones')">🔔 Avisos</button>
+      <div class="tabs-neon">
+      <button class="tab-btn" routerLink="/configuracion">⚙️ Configuración</button>
     </div>
+</div>
+    
   </header>
 
   <div class="dashboard-content">
-    <div *ngIf="activeTab() === 'tabla'" class="glass-card">
+    
+    @if (activeTab() === 'resumen') {
+      <div class="stats-grid-admin slide-in">
+        <div class="stat-card-neon">
+          <span class="label">Usuarios Activos</span>
+          <span class="value">150</span> </div>
+        <div class="stat-card-neon">
+          <span class="label">Equipos</span>
+          <span class="value">24</span> </div>
+        <div class="stat-card-neon">
+          <span class="label">Partidos Próximos</span>
+          <span class="value">8</span> </div>
+        <div class="stat-card-neon">
+          <span class="label">Torneos Activos</span>
+          <span class="value">3</span> </div>
+        <div class="stat-card-neon">
+          <span class="label">Canchas</span>
+          <span class="value">5</span> </div>
+      </div>
+    }
+
+    <div *ngIf="activeTab() === 'tabla'" class="glass-card slide-in">
        <app-tournament-table></app-tournament-table>
     </div>
 
-    <div *ngIf="activeTab() === 'calendario'" class="glass-card">
+    <div *ngIf="activeTab() === 'calendario'" class="glass-card slide-in">
        <app-tournament-calendar></app-tournament-calendar>
     </div>
 
-    <div *ngIf="activeTab() === 'estadisticas'" class="glass-card">
-       <div class="stats-grid">
-          <div class="stat-item">⚽ Máximo Goleador: <strong>Juan Pérez (12 goles)</strong></div>
-          <div class="stat-item">🧤 Valla Menos Vencida: <strong>Titanes FC</strong></div>
-          <div class="stat-item">🟨 Juego Limpio: <strong>Galácticos SC</strong></div>
-       </div>
+    <div *ngIf="activeTab() === 'estadisticas'" class="glass-card slide-in">
+       <div class="performance-grid">
+          <div class="stat-item">⚽ Promedio Goles/Partido: <strong>3.5</strong></div> <div class="stat-item">🧤 Valla Menos Vencida: <strong>Titanes FC</strong></div>
+          <div class="stat-item">⭐ Equipo más activo: <strong>FC Barcelona Jr.</strong></div> <div class="stat-item">📍 Cancha más usada: <strong>Sede Central</strong></div> </div>
     </div>
 
-    <div *ngIf="activeTab() === 'equipos'" class="glass-card">
-       <div class="teams-list">
-          <div class="team-chip">🛡️ Galácticos FC</div>
-          <div class="team-chip">🛡️ Titanes SC</div>
-          <div class="team-chip">🛡️ Rayo Vallecano</div>
-          <div class="team-chip">🛡️ Spartans FC</div>
-       </div>
+    <div *ngIf="activeTab() === 'notificaciones'" class="glass-card slide-in">
+      <h3 class="panel-title">Reportes y Alertas Recientes</h3>
+      <ul class="action-list-neon">
+        <li class="item-pending">⏳ Inscripción pendiente: Los Galácticos</li> <li class="item-report">⚠️ Reporte: Conducta antideportiva (Cancha 2)</li> <li>⚽ Final Copa Oro - Mañana 10:00 AM</li> <li>🏆 Torneo Relámpago - Inicia en 2 días</li> </ul>
     </div>
+
   </div>
 </div>
-<hr>
